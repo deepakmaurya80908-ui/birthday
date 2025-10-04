@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Birthday Surprise!</title>
+    <style>
+        /* Reset & Base */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body,
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .slides {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: left 1s ease;
+        }
+        
+        .slide.active {
+            left: 0;
+        }
+        /* Gradient background animation */
+        
+        .slide1,
+        .slide2,
+        .slide3,
+        .slide4,
+        .slide5 {
+            color: #fff;
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .slide1 {
+            background-image: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+        }
+        
+        .slide2 {
+            background-image: linear-gradient(270deg, #fbc2eb, #a6c1ee, #f6d365, #fda085);
+        }
+        
+        .slide3 {
+            background-image: linear-gradient(270deg, #fbc2eb, #a6c1ee, #f6d365, #fda085);
+        }
+        
+        .slide4 {
+            background-image: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+        }
+        
+        .slide5 {
+            background-image: linear-gradient(270deg, #a18cd1, #fbc2eb, #ff9a9e, #fad0c4);
+        }
+        /* Buttons */
+        
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            background: #fff;
+            color: #333;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+        }
+        
+        button:hover {
+            transform: scale(1.1);
+            background: #ffd700;
+        }
+        /* Balloons */
+        
+        .balloons {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .balloon {
+            width: 60px;
+            height: 80px;
+            border-radius: 50%;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .balloon::after {
+            content: '';
+            width: 2px;
+            height: 50px;
+            background: #555;
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .red {
+            background: red;
+        }
+        
+        .blue {
+            background: blue;
+        }
+        
+        .yellow {
+            background: yellow;
+        }
+        
+        .green {
+            background: green;
+        }
+        
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-25px);
+            }
+        }
+        /* Cake */
+        
+        .cake {
+            position: relative;
+            margin-top: 30px;
+        }
+        
+        .cake-base {
+            width: 150px;
+            height: 100px;
+            background: #ff6f61;
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        .cake-img {
+            width: 200px;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .candle {
+            width: 10px;
+            height: 50px;
+            background: #ffeb3b;
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            box-shadow: 0 0 10px yellow;
+            animation: candleFlicker 0.5s infinite alternate;
+            cursor: pointer;
+        }
+        
+        .candle.blow {
+            animation: none;
+            background: #555;
+            box-shadow: none;
+        }
+        
+        @keyframes candleFlicker {
+            0% {
+                box-shadow: 0 0 5px yellow;
+            }
+            100% {
+                box-shadow: 0 0 20px yellow;
+            }
+        }
+        /* Confetti */
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: randomColor;
+            top: 0;
+            animation: fall 3s linear infinite;
+            opacity: 0.8;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        /* Sparkles */
+        
+        .sparkle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            animation: sparkleAnim 3s linear infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes sparkleAnim {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-50px) scale(1.5);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+            }
+        }
+        /* Glitter text */
+        
+        .glitter {
+            background: linear-gradient(90deg, #fff, #ff0, #0ff, #f0f, #fff);
+            background-size: 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glitterAnim 3s linear infinite;
+            font-style: italic;
+        }
+        
+        @keyframes glitterAnim {
+            0% {
+                background-position: 0%;
+            }
+            50% {
+                background-position: 100%;
+            }
+            100% {
+                background-position: 0%;
+            }
+        }
+        /* Fireworks */
+        
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: randomColor;
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+        
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(5) translateY(-200px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+    <div class="slides">
+
+        <!-- Slide 1: Welcome -->
+        <section class="slide slide1">
+            <h1 class="glitter">🎉 Happy Birthday shivani 🎉</h1>
+            <p>Welcome to your special day!</p>
+            <button onclick="nextSlide()">Start 🎂</button>
+        </section>
+
+        <!-- Slide 2: Balloons -->
+        <section class="slide slide2">
+            <h2 class="glitter">Look at these balloons! 🎈</h2>
+            <div class="balloons">
+                <div class="balloon red"></div>
+                <div class="balloon blue"></div>
+                <div class="balloon yellow"></div>
+                <div class="balloon green"></div>
+            </div>
+            <button onclick="nextSlide()">Next 🎁</button>
+        </section>
+
+        <!-- Slide 3: Personalized Slide -->
+        <section class="slide slide5">
+            <h2 class="glitter">For You 💖</h2>
+            <p>1. You are amazing and full of joy.</p>
+            <p>2. Your smile lights up the room.</p>
+            <p>3. Always kind and caring to everyone.</p>
+            <p>4. You inspire people with your energy.</p>
+            <p>5. Smart, talented, and creative.</p>
+            <p>6. You deserve happiness every day.</p>
+            <p>7. Keep shining in all that you do.</p>
+            <p>8. Your laughter is contagious and bright.</p>
+            <p>9. May your dreams come true beautifully.</p>
+            <p>10. You are loved more than you know! 💕</p>
+            <button onclick="nextSlide()">Next 🎂</button>
+        </section>
+
+        <!-- Slide 4: Cake Slide with Image -->
+        <section class="slide slide3">
+            <h2 class="glitter">Your Cake 🎂</h2>
+            <div class="cake">
+                <div class="candle" onclick="blowCandle()"></div>
+                <div class="cake-base"></div>
+            </div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7H4MqToPmvRGdlHXIGyCMwVoKihOLKMzovw&s" alt="Cake" class="cake-img">
+            <button onclick="nextSlide()">Make a Wish ✨</button>
+        </section>
+
+        <!-- Slide 5: Wish Slide -->
+        <section class="slide slide4">
+            <h2 class="glitter">🥳 May all your dreams come true! 🥳</h2>
+            <p>Have a wonderful day full of happiness!</p>
+            <button onclick="showSurprise()">Surprise 🎁</button>
+            <p id="surpriseMsg" style="margin-top:20px;font-size:1.5rem;color:#fff;"></p>
+            <button onclick="restart()">Restart 🔄</button>
+        </section>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        slides[currentSlide].classList.add('active');
+
+        // Next slide
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide++;
+            if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+            slides[currentSlide].classList.add('active');
+            if (currentSlide === 3) document.getElementById('music').play();
+        }
+
+        // Restart
+        function restart() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = 0;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('music').pause();
+        }
+
+        // Candle blow
+        function blowCandle() {
+            const candle = document.querySelector('.candle');
+            candle.classList.add('blow');
+            createConfetti(100);
+            createFireworks(10);
+        }
+
+        // Confetti
+        function createConfetti(num) {
+            for (let i = 0; i < num; i++) {
+                const conf = document.createElement('div');
+                conf.classList.add('confetti');
+                conf.style.left = Math.random() * window.innerWidth + 'px';
+                conf.style.background = randomColor();
+                conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(conf);
+                setTimeout(() => {
+                    conf.remove();
+                }, 4000);
+            }
+        }
+
+        // Fireworks
+        function createFireworks(num) {
+            for (let i = 0; i < num; i++) {
+                const fire = document.createElement('div');
+                fire.classList.add('firework');
+                fire.style.left = Math.random() * window.innerWidth + 'px';
+                fire.style.background = randomColor();
+                document.body.appendChild(fire);
+                setTimeout(() => {
+                    fire.remove();
+                }, 1000);
+            }
+        }
+
+        // Random color
+        function randomColor() {
+            const colors = ['#ff0', '#f0f', '#0ff', '#0f0', '#f00', '#00f', '#ff69b4', '#ffa500'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Sparkles background
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.classList.add('sparkle');
+            star.style.left = Math.random() * window.innerWidth + 'px';
+            star.style.top = Math.random() * window.innerHeight + 'px';
+            document.body.appendChild(star);
+        }
+
+        // Surprise message
+        function showSurprise() {
+            document.getElementById('surpriseMsg').innerHTML = "🎉 You are a Rockstar! Keep shining and achieving big dreams! 🚀✨";
+        }
+
+        // Cursor sparkle effect
+        document.addEventListener('mousemove', e => {
+            const s = document.createElement('div');
+            s.classList.add('sparkle');
+            s.style.left = e.clientX + 'px';
+            s.style.top = e.clientY + 'px';
+            s.style.width = '5px';
+            s.style.height = '5px';
+            s.style.opacity = 1;
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 800);
+        });
+    </script>
+
+</body>
+
+</html>
